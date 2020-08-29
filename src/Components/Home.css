@@ -18,3 +18,35 @@ title {
   pos {
     margin-bottom: 12;
   }
+
+  dashboard {
+    display: flex;
+  }
+
+  
+  drawer {
+   
+    width: 240;
+    flex-shrink: 0; 
+}
+
+appBar {
+  
+  width: 100% - 240px ;
+  margin-left: 240;
+
+}
+
+ 
+menuButton {
+  margin-right:2;
+
+  display: none;
+  
+}
+
+
+drawerPaper{
+
+  width: 240,
+}
