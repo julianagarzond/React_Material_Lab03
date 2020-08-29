@@ -1,5 +1,16 @@
 
- import React from 'react';
+  import React from 'react';
+  import clsx from 'clsx';
+  import { makeStyles } from '@material-ui/core/styles';
+  import Drawer from '@material-ui/core/Drawer';
+  import Button from '@material-ui/core/Button';
+  import List from '@material-ui/core/List';
+  import Divider from '@material-ui/core/Divider';
+  import ListItem from '@material-ui/core/ListItem';
+  import ListItemIcon from '@material-ui/core/ListItemIcon';
+  import ListItemText from '@material-ui/core/ListItemText';
+  import InboxIcon from '@material-ui/icons/MoveToInbox';
+  import MailIcon from '@material-ui/icons/Mail';
   import Card from '@material-ui/core/Card';
   import CardContent from '@material-ui/core/CardContent';
   import Typography from '@material-ui/core/Typography';
@@ -7,20 +18,73 @@
   import EventNoteSharpIcon from '@material-ui/icons/EventNoteSharp';
   import EventAvailableSharpIcon from '@material-ui/icons/EventAvailableSharp';
   import FlipCameraAndroidSharpIcon from '@material-ui/icons/FlipCameraAndroidSharp';
+  import FaceIcon from '@material-ui/icons/Face';
+  import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
 
-const drawerWidth = 240;
+ 
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+});
   
   export default function Home(props) {
-    const { window } = props;
-    const [open, setOpen] = React.useState(false);
-    const bull = <span className="bullet">•</span>;
+    const classes = useStyles();
+    const [state, setState] = React.useState({
+      left: false
 
-    const handleDrawer= () => {
-      setOpen(!open);
-    };
-  
+    });
+   
+    const bull = <span className="bullet">•</span>;
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+      setState({state, [anchor]: open });
+     };
+
+     const list = (anchor) => (
+      <div
+        className={clsx(classes.list, {
+          [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        })}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <List>
+          {['Juliana Garzón Duque', 'juligardu@gmail.com', 'Send email'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index === 0 ? <FaceIcon />:<KeyboardTabIcon/>}</ListItemIcon>
+              <ListItemText primary={text} />
+              <br></br>
+              <br></br>
+              <br></br>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        
+      </div>
+
+      
+    );
+
+ 
     return (
-    <div className="root">
+
+      <div>
+      {['left'].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button  variant="outlined" size="large" onClick={toggleDrawer(anchor, true)} > VIEW MY PROFILE</Button>
+          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+            {list(anchor)}
+            
+          </Drawer>
+          <div className="root">
       <Card className= "root">
         <CardContent>
           <Typography className="title" color="primary" gutterBottom>
@@ -128,6 +192,10 @@ const drawerWidth = 240;
         
       </Card>
       </div>
+        </React.Fragment>
+      ))}
+    </div>
+    
       
     );
   }
