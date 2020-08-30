@@ -9,8 +9,6 @@
   import ListItem from '@material-ui/core/ListItem';
   import ListItemIcon from '@material-ui/core/ListItemIcon';
   import ListItemText from '@material-ui/core/ListItemText';
-  import InboxIcon from '@material-ui/icons/MoveToInbox';
-  import MailIcon from '@material-ui/icons/Mail';
   import Card from '@material-ui/core/Card';
   import CardContent from '@material-ui/core/CardContent';
   import Typography from '@material-ui/core/Typography';
@@ -31,16 +29,13 @@ const useStyles = makeStyles({
   },
 });
   
-  export default function Home(props) {
+  export default function Home() {
     const classes = useStyles();
-    const [state, setState] = React.useState({
-      left: false
-
-    });
+    const [state, setState] = React.useState(false);
    
     const bull = <span className="bullet">•</span>;
     const toggleDrawer = (anchor, open) => (event) => {
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      if (event.type === 'keydown') {
         return;
       }
       setState({state, [anchor]: open });
@@ -48,9 +43,7 @@ const useStyles = makeStyles({
 
      const list = (anchor) => (
       <div
-        className={clsx(classes.list, {
-          [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-        })}
+       
         role="presentation"
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}

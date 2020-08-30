@@ -11,6 +11,14 @@ bullet {
     
   
 }
+
+list {
+  width: 250;
+}
+
+fullList {
+  width: auto;
+}
 title {
     font-size: 14;
   }
